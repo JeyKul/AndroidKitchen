@@ -117,7 +117,7 @@ project_menu() {
 		        ;;
             3)
                 echo "Extracting firmware..."
-                source $KSCRIPTS/extract_fw.sh
+                source $KSCRIPTS/extract_fw.sh --source $SOURCE_FOLDER --dest $DEST_FOLDER
                 ;;
             9)
                 break

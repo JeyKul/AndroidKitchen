@@ -7,6 +7,7 @@ export LOG_DIR="logs"
 export KHOME=$(pwd)
 export KSCRIPTS=$KHOME/scripts
 export LOG_FILE="$LOG_DIR/download_fw.log"
+export BINN="$KITCHEN_HOME/ext/bin"
 
 $KSCRIPTS/check_dependencies.sh
 export PATH=$PATH:$BINARYPATH
