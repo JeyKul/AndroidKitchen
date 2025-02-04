@@ -4,3 +4,4 @@ input/
 workdir/
 logs/
 ext/
+venv/
