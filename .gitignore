@@ -5,3 +5,4 @@ workdir/
 logs/
 ext/
 venv/
+*.log
