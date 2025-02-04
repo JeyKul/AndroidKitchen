@@ -74,7 +74,6 @@ EOF
     fi
 }
 
-# Function to list and select a project
 select_project() {
     echo "Available projects:"
     select project in $(ls "$PROJECTS_DIR"); do
@@ -117,10 +116,10 @@ project_menu() {
                 echo "Extracting firmware..."
                 rm $DEST_FOLDER/*
                 bash $KSCRIPTS/extract_fw.sh --source $SOURCE_FOLDER --dest $DEST_FOLDER
-                echo $MDDL
-                echo $PRJPTH
-                echo $SOURCE_FOLDER
-                echo $DEST_FOLDER
+                echo "$MDDL^" $Kdebug
+                echo "$PRJPTH" $Kdebug
+                echo "$SOURCE_FOLDER" $Kdebug
+                echo "$DEST_FOLDER" $Kdebug
                 ;;
             9)
                 break
@@ -140,14 +139,7 @@ main() {
         
         show_menu
         source $KHOME/scripts/prepare.sh
-        echo $PROJECTS_DIR
-        echo $DOWNLOADS_DIR
-        echo $INPUT_DIR
-        echo $WORKDIR_DIR
-        echo $LOG_DIR
-        echo $KHOME
-        echo $KSCRIPTS
-        echo $LOG_FILE
+
         read -p "Enter your choice: " choice
         
         case "$choice" in

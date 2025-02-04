@@ -13,16 +13,13 @@ fi
 declare -r ODIN_DIR="$KITCHEN_HOME/projects/$prj/downloads"
 declare -r LOG_FILE="$LOG_DIR/download_fw.log"
 
-# Default paths (to be overridden by arguments)
-#SOURCE_FOLDER=""
-#DEST_FOLDER=""
 AP_ARCHIVE=$(ls "$SOURCE_FOLDER" | grep -i "AP")
 BL_ARCHIVE=$(ls "$SOURCE_FOLDER" | grep -i "BL")
 CP_ARCHIVE=$(ls "$SOURCE_FOLDER" | grep -i "CP")
 CSC_ARCHIVE=$(ls "$SOURCE_FOLDER" | grep -i "CSC")
 s2i=$BINN/simg2img
 lpup=$BINN/lpunpack
-# Parse arguments
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -s|--source)
@@ -66,7 +63,7 @@ EXTRACT_KERNEL_BINARIES() {
         echo "Extracting $file"
         tar xf "$SOURCE_FOLDER/$AP_ARCHIVE" "$file" && lz4 -d -q --rm "$file" "${file%.lz4}"
     done
-    cd - &>/dev/null
+    cd
 }
 
 EXTRACT_OS_PARTITIONS() {
@@ -77,7 +74,7 @@ EXTRACT_OS_PARTITIONS() {
     $s2i "super.img.sparse" "super.img" && rm "super.img.sparse"
     $lpup "super.img"
     rm "super.img"
-    cd - &>/dev/null
+    cd
 }
 
 EXTRACT_AVB_BINARIES() {
@@ -85,8 +82,8 @@ EXTRACT_AVB_BINARIES() {
     cd "$DEST_FOLDER"
     tar xf "$SOURCE_FOLDER/$BL_ARCHIVE" "vbmeta.img.lz4" && lz4 -d -q --rm "vbmeta.img.lz4" "vbmeta.img"
     cp "vbmeta.img" "vbmeta_patched.img"
-    printf "\x03" | dd of="vbmeta_patched.img" bs=1 seek=123 count=1 conv=notrunc &> /dev/null
-    cd - &>/dev/null
+    printf "\x03" | dd of="vbmeta_patched.img" bs=1 seek=123 count=1 conv=notrunc
+    cd
 }
 
 EXTRACT_ALL() {
