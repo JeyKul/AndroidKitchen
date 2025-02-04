@@ -10,13 +10,6 @@ if ! command -v fakeroot &>/dev/null; then
     exit 1
 fi
 
-
-KITCHEN_HOME=$(pwd)
-config_file=$KITCHEN_HOME/config.json
-prj=$(jq -r '.project_name' "$config_file")
-KITCHEN_SCRIPTS=$KITCHEN_HOME/scripts
-LOG_DIR="$KITCHEN_HOME/logs"
-BINN="$KITCHEN_HOME/ext/bin"
 declare -r ODIN_DIR="$KITCHEN_HOME/projects/$prj/downloads"
 declare -r LOG_FILE="$LOG_DIR/download_fw.log"
 
