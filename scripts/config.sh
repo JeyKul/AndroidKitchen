@@ -7,7 +7,7 @@ export mdlnr=$(jq -r '.model_number' "$config_file")
 export csc=$(jq -r '.csc' "$config_file")
 export imei=$(jq -r '.imei' "$config_file")
 export target_dir="$ODIN_DIR/${mdlnr}_${csc}"
-export ODIN_DIR="$KITCHEN_HOME/projects/$prj/download"
+export ODIN_DIR="$KHOME/projects/$prj/download"
 export PRJPTH="$KHOME/projects/$prj"
 export MDDL="$PRJPTH/download"
 
