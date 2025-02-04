@@ -25,7 +25,7 @@ create_new_project() {
         return
     fi
     
-    mkdir -p "$prj"
+    mkdir -p "$prj" "$EXTRACT_DIR" "$WORKDIR_DIR" "$INPUT_DIR" "$MDDL"
     echo "Project directory created: $prj"
     
     echo "Select device brand:"
@@ -34,7 +34,7 @@ create_new_project() {
     read -p "Enter choice (1 or 2): " brand_choice
     
     if [[ "$brand_choice" == "1" ]]; then
-        read -p "Enter Samsung model number (e.g., sm-s908b): " model_number
+        read -p "Enter Samsung model number (e.g., SM-S908B (caseinsensitive)): " model_number
         model_number=$(echo "$model_number" | tr '[:lower:]' '[:upper:]')
         read -p "Enter CSC (e.g., XEU): " csc
         csc=$(echo "$csc" | tr '[:lower:]' '[:upper:]')
@@ -92,9 +92,7 @@ select_project() {
 # Function to show the project menu
 project_menu() {
     config_file="$1"
-    SOURCE_FOLDER=$KHOME/downloads/$mdlnr\_$csc
-    DEST_FOLDER=$KHOME/downloads
-    
+
     
     while true; do
         echo "===================================="
@@ -117,7 +115,12 @@ project_menu() {
 		        ;;
             3)
                 echo "Extracting firmware..."
-                source $KSCRIPTS/extract_fw.sh --source $SOURCE_FOLDER --dest $DEST_FOLDER
+                rm $DEST_FOLDER/*
+                bash $KSCRIPTS/extract_fw.sh --source $SOURCE_FOLDER --dest $DEST_FOLDER
+                echo $MDDL
+                echo $PRJPTH
+                echo $SOURCE_FOLDER
+                echo $DEST_FOLDER
                 ;;
             9)
                 break
@@ -145,7 +148,6 @@ main() {
         echo $KHOME
         echo $KSCRIPTS
         echo $LOG_FILE
-        
         read -p "Enter your choice: " choice
         
         case "$choice" in
