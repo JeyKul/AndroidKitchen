@@ -1,17 +1,48 @@
-config_file=$KHOME/config.json
+# SPECIFY KITCHEN HOME #
+KHOME=$(pwd)
 
-cat $config_file
+# EXPORT WORKSPACE #
+WKSPCE="$KHOME/WORKSPACE"
 
-export prj=$(jq -r '.project_name' "$config_file")
-export mdlnr=$(jq -r '.model_number' "$config_file")
-export csc=$(jq -r '.csc' "$config_file")
-export imei=$(jq -r '.imei' "$config_file")
-export target_dir="$ODIN_DIR/${mdlnr}_${csc}"
-export ODIN_DIR="$KHOME/projects/$prj/download"
-export PRJPTH="$KHOME/projects/$prj"
-export MDDL="$PRJPTH/download"
+# SPECIFY CONFIG FILE #
+CFG="$KHOME/config.json"
+CFG_PRJ="$PRJPTH/config.json"
 
-export WORKDIR_DIR="$PRJPTH/workdir"
-export INPUT_DIR="$PRJPTH/input_dir"
-export DEST_FOLDER="$PRJPTH/extract"
-export SOURCE_FOLDER="$MDDL/${mdlnr}_${csc}"
+
+# GRAB PROJECT NAME FROM CONFIG # LATER #
+PRJ=$(jq -r '.project_name' "$CFG" 2>/dev/null)
+
+# GRAB MODELNUMBER FROM CONFIG # LATER #
+MDLNR=$(jq -r '.model_number' "$CFG" 2>/dev/null)
+
+# GRAB CSC FROM CONFIG # LATER #
+CSC=$(jq -r '.csc' "$CFG" 2>/dev/null)
+
+# GRAB IMEI FROM CONFIG # LATER #
+IMEI=$(jq -r '.imei' "$CFG" 2>/dev/null)
+
+# DOWNLOAD FOLDER #
+DWNLD="$WKSPCE/download"
+
+# TARGET DOWNLOAD PATH #
+TARGETDL="$DWNLD/${mdlnr}_${csc}"
+
+# PROJECT FOLDER #
+
+PRJCT="$WKSPCE/projects"
+
+# FOLDER OF PROJECT #
+
+PRJPTH="$WKSPCE/projects/$prj"
+
+# SCRIPT PATH #
+KSCRIPTS="$KHOME/scripts"
+
+CONFIG="$KSCRIPTS/config.sh"
+
+## DEBUG ##
+echo $KHOME
+#cat $CFG
+
+# ?? UNUSED ?? #
+#export MDDL= "$PRJPTH/download"
