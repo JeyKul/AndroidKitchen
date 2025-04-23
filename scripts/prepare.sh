@@ -7,3 +7,4 @@ mkdir -p $WKSPCE
 # CREATE FOLDER INSIDE WORKSPACE #
 mkdir -p $PRJCT $DWNLD
 
+mkdir -p $LOG
