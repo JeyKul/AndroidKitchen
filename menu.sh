@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 
+# PATHS #
+source ./scripts/config.sh
+source $KSCRIPTS/prepare.sh
+## DEBUG ##
+echo $KHOME $WKSPCE $CFG $PRJ $MDLNR $CSC $IMEI $DWNLD $TARGETDL $PRJCT $PRJPTH $KSCRIPTS
 
-export KHOME=$(pwd)
-# Function to display the main menu
+# VENV ATTEMPT # 
+
+if ! source venv/bin/activate > /dev/null 2>&1; then
+    echo "Virtual environment not found or activation failed. Running script.sh..."
+    # ADD SCRIPT #
+fi
+
+# MENU #
 show_menu() {
     clear
     echo "===================================="
@@ -10,130 +21,16 @@ show_menu() {
     echo "===================================="
     echo "1. Create New Project"
     echo "2. Select Existing Project"
+    echo "7. Clean AndroidKitchen"
+    echo "8. Check Dependencies"
     echo "9. Exit"
+    echo "echo $KHOME"
     echo "===================================="
-}
-
-# Function to create a new project
-create_new_project() {
-    echo "Creating a new project..."
-    read -p "Enter project name: " project_name
-    config_file="$prj/config.json"
-    
-    if [[ -d "$prj" ]]; then
-        echo "Project '$project_name' already exists. Please choose a different name."
-        return
-    fi
-    
-    mkdir -p "$prj" "$EXTRACT_DIR" "$WORKDIR_DIR" "$INPUT_DIR" "$MDDL"
-    echo "Project directory created: $prj"
-    
-    echo "Select device brand:"
-    echo "1. Samsung"
-    echo "2. Other"
-    read -p "Enter choice (1 or 2): " brand_choice
-    
-    if [[ "$brand_choice" == "1" ]]; then
-        read -p "Enter Samsung model number (e.g., SM-S908B (caseinsensitive)): " model_number
-        model_number=$(echo "$model_number" | tr '[:lower:]' '[:upper:]')
-        read -p "Enter CSC (e.g., XEU): " csc
-        csc=$(echo "$csc" | tr '[:lower:]' '[:upper:]')
-        read -p "Enter IMEI or serial number: " imei
-        read -p "Do you want to download more than one firmware version? (y/n): " download_multiple
-        
-        if [[ "$download_multiple" == "y" || "$download_multiple" == "Y" ]]; then
-            read -p "How many firmware versions do you want to download? " firmware_count
-        else
-            firmware_count=1
-        fi
-        
-        cat > "$config_file" <<EOF
-{
-    "project_name": "$project_name",
-    "model_number": "$model_number",
-    "csc": "$csc",
-    "imei": "$imei",
-    "firmware_count": "$firmware_count"
-}
-EOF
-        source $KSCRIPTS/config.sh
-        echo "Project configuration saved!"
-        echo "Downloading firmware..."
-        for ((i=1; i<=firmware_count; i++)); do
-            firmware_dir="$prj/firmware_$i"
-            mkdir -p "$firmware_dir"
-            (
-                cd "$firmware_dir" || exit
-                source $KSCRIPTS/download_fw.sh -f "$mdlnr" "$csc" "$imei"
-            ) &
-        done
-        wait
-        echo "Firmware download complete!"
-    else
-        echo "Other brands not supported yet."
-    fi
-}
-
-select_project() {
-    echo "Available projects:"
-    select project in $(ls "$PROJECTS_DIR"); do
-        if [[ -n "$project" ]]; then
-            cp $KHOME/$PROJECTS_DIR/$project/config.json $KHOME/config.json
-            source $KHOME/scripts/config.sh
-            project_menu "$KHOME/config.json"
-            break
-        else
-            echo "Invalid selection. Try again."
-        fi
-    done
-}
-
-# Function to show the project menu
-project_menu() {
-    config_file="$1"
-
-    
-    while true; do
-        echo "===================================="
-        echo "  Project: $mdlnr"
-        echo "===================================="
-        echo "1. Check for Firmware Update"
-        echo "2. Download Firmware"
-        echo "3. Extract Downloaded Firmware"
-        echo "9. Back to Main Menu"
-        echo "===================================="
-        read -p "Enter your choice: " choice
-        
-        case "$choice" in
-            1)
-                echo "Checking for firmware update..."
-                source $KSCRIPTS/download_fw.sh "$mdlnr" "$csc" "$imei"
-                ;;
-	        2)  echo "Downloading FW"
-		        source $KSCRIPTS/download_fw.sh -f "$mdlnr" "$csc" "$imei"
-		        ;;
-            3)
-                echo "Extracting firmware..."
-                rm $DEST_FOLDER/*
-                bash $KSCRIPTS/extract_fw.sh --source $SOURCE_FOLDER --dest $DEST_FOLDER
-                echo "$MDDL^" $Kdebug
-                echo "$PRJPTH" $Kdebug
-                echo "$SOURCE_FOLDER" $Kdebug
-                echo "$DEST_FOLDER" $Kdebug
-                ;;
-            9)
-                break
-                ;;
-            *)
-                echo "Invalid choice. Try again."
-                ;;
-        esac
-    done
 }
 
 trap 'rm -f $KHOME/config.json' EXIT
 
-# Main script logic
+# MAIN SCRIPT LOGIC #
 main() {
     while true; do
         
@@ -144,10 +41,18 @@ main() {
         
         case "$choice" in
             1)
+                source $KSCRIPTS/create_new_project.sh
                 create_new_project
                 ;;
             2)
+                source $KSCRIPTS/create_new_project.sh 
                 select_project
+                ;;
+            7)
+                source $KSCRIPTS/clean.sh
+                ;;
+            8)
+                source scripts/check_dependencies.sh
                 ;;
             9)
                 echo "Exiting..."
@@ -162,3 +67,4 @@ main() {
 }
 
 main
+
