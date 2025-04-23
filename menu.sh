@@ -8,10 +8,12 @@ echo $KHOME $WKSPCE $CFG $PRJ $MDLNR $CSC $IMEI $DWNLD $TARGETDL $PRJCT $PRJPTH 
 
 # VENV ATTEMPT # 
 
+venvcheck(){
 if ! source venv/bin/activate > /dev/null 2>&1; then
     echo "Virtual environment not found or activation failed. Running script.sh..."
-    # ADD SCRIPT #
+    source $KSCRIPTS/samloadersetup.sh
 fi
+}
 
 # MENU #
 show_menu() {
@@ -66,5 +68,5 @@ main() {
     done
 }
 
+venvcheck
 main
-
