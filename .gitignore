@@ -2,6 +2,7 @@ projects/
 downloads/
 input/
 workdir/
+WORKSPACE/
 logs/
 ext/
 venv/
