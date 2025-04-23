@@ -8,24 +8,27 @@ WKSPCE="$KHOME/WORKSPACE"
 CFG="$KHOME/config.json"
 CFG_PRJ="$PRJPTH/config.json"
 
+# LOG SETUP #
+LOG=$WKSPCE/logs
+LOG_FILE="$LOG/$SCRIPT"
 
 # GRAB PROJECT NAME FROM CONFIG # LATER #
-PRJ=$(jq -r '.project_name' "$CFG" 2>/dev/null)
+PRJ=$(jq -r '.project_name' "$CFG")
 
 # GRAB MODELNUMBER FROM CONFIG # LATER #
-MDLNR=$(jq -r '.model_number' "$CFG" 2>/dev/null)
+MDLNR=$(jq -r '.model_number' "$CFG")
 
 # GRAB CSC FROM CONFIG # LATER #
-CSC=$(jq -r '.csc' "$CFG" 2>/dev/null)
+CSC=$(jq -r '.csc' "$CFG")
 
 # GRAB IMEI FROM CONFIG # LATER #
-IMEI=$(jq -r '.imei' "$CFG" 2>/dev/null)
+IMEI=$(jq -r '.imei' "$CFG")
 
 # DOWNLOAD FOLDER #
 DWNLD="$WKSPCE/download"
 
 # TARGET DOWNLOAD PATH #
-TARGETDL="$DWNLD/${mdlnr}_${csc}"
+TARGETDL="$DWNLD/${MDLNR}_${CSC}"
 
 # PROJECT FOLDER #
 
@@ -33,7 +36,7 @@ PRJCT="$WKSPCE/projects"
 
 # FOLDER OF PROJECT #
 
-PRJPTH="$WKSPCE/projects/$prj"
+PRJPTH="$WKSPCE/projects/$PRJ"
 
 # SCRIPT PATH #
 KSCRIPTS="$KHOME/scripts"
