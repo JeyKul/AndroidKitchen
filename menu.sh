@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 
 # PATHS #
 source ./scripts/config.sh
@@ -37,7 +38,6 @@ main() {
     while true; do
         
         show_menu
-        source $KHOME/scripts/prepare.sh
 
         read -p "Enter your choice: " choice
         
