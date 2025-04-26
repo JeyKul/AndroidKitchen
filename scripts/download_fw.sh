@@ -60,6 +60,7 @@ download_firmware() {
             exit 1
         fi
         rm "$zip_file"
+        
     else
         echo "No ZIP file found in $TARGETDL." | tee -a "$LOG_FILE"
         exit 1
