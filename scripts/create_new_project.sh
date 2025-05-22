@@ -20,6 +20,7 @@ create_new_project() {
 
     # SERIES OF NEW FOLDERS
     mkdir -p "$PRJPTH"
+    echo "I am about to create: $PRJPTH"
     mkdir -p "$DWNLD"
     mkdir -p "$MDDL"
     echo "Project directory created: $prj"
@@ -105,7 +106,7 @@ project_menu() {
     
     while true; do
         echo "===================================="
-        echo "  Project: $mdlnr"
+        echo "  Project: $MDLNR"
         echo "===================================="
         echo "1. Check for Firmware Update"
         echo "2. Download Firmware"

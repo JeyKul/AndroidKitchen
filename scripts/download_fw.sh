@@ -8,6 +8,8 @@ source $CONFIG
 echo $SCRIPT
 echo $LOG_FILE
 echo $IMEI
+source $SLDR
+
 
 #echo hello world
 
@@ -31,6 +33,7 @@ download_firmware() {
     imei="${IMEI//[[:space:]]/}"
 
     echo $imei
+    echo $CSC
 
     if [[ $imei =~ ^[0-9]{15}$ || $imei =~ ^[0-9]{8}$ ]]; then
         samloader_flags=("-i" "$imei")

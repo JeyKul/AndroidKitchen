@@ -13,7 +13,7 @@ LOG=$WKSPCE/logs
 LOG_FILE="$LOG/$SCRIPT"
 
 # GRAB PROJECT NAME FROM CONFIG # LATER #
-PRJ=$(jq -r '.project_name' "$CFG")
+prj=$(jq -r '.project_name' "$CFG")
 
 # GRAB MODELNUMBER FROM CONFIG # LATER #
 MDLNR=$(jq -r '.model_number' "$CFG")
@@ -34,7 +34,7 @@ TARGETDL="$DWNLD/${MDLNR}_${CSC}"
 EXTR="$WKSPCE/extract"
 AP="$EXTR/ap"
 CP="$EXTR/cp"
-CSC="$EXTR/csc"
+CSC2="$EXTR/csc"
 BL="$EXTR/bl"
 
 # PROJECT FOLDER #
@@ -43,7 +43,7 @@ PRJCT="$WKSPCE/projects"
 
 # FOLDER OF PROJECT AND ITS FOLDERS #
 
-PRJPTH="$WKSPCE/projects/$PRJ"
+PRJPTH="$WKSPCE/projects/$prj"
 
 EXTRPRJ="$PRJPTH/.extracted"
 PARTPRJ="$PRJPTH/partitions"
@@ -52,6 +52,8 @@ PARTPRJ="$PRJPTH/partitions"
 KSCRIPTS="$KHOME/scripts"
 
 CONFIG="$KSCRIPTS/config.sh"
+
+SLDR="$KSCRIPTS/samloadersetup.sh"
 
 ## DEBUG ##
 echo $KHOME
