@@ -10,7 +10,7 @@ CFG_PRJ="$PRJPTH/config.json"
 
 # LOG SETUP #
 LOG=$WKSPCE/logs
-LOG_FILE="$LOG/$SCRIPT"
+LOG_FILE="$LOG/log.txt"
 
 # GRAB PROJECT NAME FROM CONFIG # LATER #
 prj=$(jq -r '.project_name' "$CFG")

@@ -132,6 +132,12 @@ project_menu() {
                 echo "$SOURCE_FOLDER" $Kdebug
                 echo "$DEST_FOLDER" $Kdebug
                 ;;
+            990)
+                clear
+                source $CONFIG
+                echo "extract_0.sh"
+                source $KSCRIPTS/extract_0.sh
+                ;;
             991)
                 clear
                 echo "extract_1.sh"
